@@ -118,18 +118,6 @@ async def handle_list_tools() -> list[types.Tool]:
     """
     return [
         types.Tool(
-            name="add-note",
-            description="Add a new note",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "name": {"type": "string"},
-                    "content": {"type": "string"},
-                },
-                "required": ["name", "content"],
-            },
-        ),
-        types.Tool(
             name="execute-snowflake-sql",
             description="Exécute une requête SQL sur Snowflake et retourne le résultat.",
             inputSchema={
@@ -211,24 +199,7 @@ async def handle_call_tool(
     Handle tool execution requests.
     Tools can modify server state and notify clients of changes.
     """
-    if name == "add-note":
-        if not arguments:
-            raise ValueError("Missing arguments")
-        note_name = arguments.get("name")
-        content = arguments.get("content")
-        if not note_name or not content:
-            raise ValueError("Missing name or content")
-        # Update server state
-        notes[note_name] = content
-        # Notify clients that resources have changed
-        await server.request_context.session.send_resource_list_changed()
-        return [
-            types.TextContent(
-                type="text",
-                text=f"Added note '{note_name}' with content: {content}",
-            )
-        ]
-
+    # Suppression du traitement de l'outil add-note
     if name == "execute-snowflake-sql":
         if not arguments or "sql" not in arguments:
             raise ValueError("Argument 'sql' manquant")
