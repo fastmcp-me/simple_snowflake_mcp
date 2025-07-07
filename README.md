@@ -21,10 +21,13 @@ The server exposes the following MCP tools to interact with Snowflake:
 #### Claude Desktop
 
 On MacOS: `~/Library/Application\ Support/Claude/claude_desktop_config.json`
+
 On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
 <details>
   <summary>Development/Unpublished Servers Configuration</summary>
+
+
   ```
   "mcpServers": {
     "simple_snowflake_mcp": {
@@ -42,6 +45,7 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
 <details>
   <summary>Published Servers Configuration</summary>
+
   ```
   "mcpServers": {
     "simple_snowflake_mcp": {
@@ -98,17 +102,6 @@ Upon launching, the Inspector will display a URL that you can access in your bro
 
 The server exposes an MCP tool `execute-snowflake-sql` to execute a SQL query on Snowflake and return the result.
 
-### Configuration
-
-Edit the `SNOWFLAKE_CONFIG` variable in `src/simple_snowflake_mcp/server.py` with your Snowflake credentials:
-```python
-SNOWFLAKE_CONFIG = {
-    "user": "<USER>",
-    "password": "<PASSWORD>",
-    "account": "<ACCOUNT>"
-}
-```
-
 ### Usage
 
 Call the MCP tool `execute-snowflake-sql` with a `sql` argument containing the SQL query to execute. The result will be returned as a list of dictionaries (one per row).
@@ -137,11 +130,13 @@ The result will be returned in the MCP response.
 2. **Configure Snowflake access**
    - Copy `.env.example` to `.env` (or create `.env` at the root) and fill in your credentials:
      ```env
-     SNOWFLAKE_USER=... 
+     SNOWFLAKE_USER=...
      SNOWFLAKE_PASSWORD=...
      SNOWFLAKE_ACCOUNT=...
-     # Optional: SNOWFLAKE_WAREHOUSE, SNOWFLAKE_DATABASE, SNOWFLAKE_SCHEMA
-     # Optional: MCP_READ_ONLY=true|false
+     # Optional: SNOWFLAKE_WAREHOUSE  # Optional: Snowflake warehouse name
+     # Optional: SNOWFLAKE_DATABASE   # Optional: default database name
+     # Optional: SNOWFLAKE_SCHEMA     # Optional: default schema name
+     # Optional: MCP_READ_ONLY=true|false  # Optional: true/false to force read-only mode
      ```
 
 3. **Configure VS Code for MCP debugging**
