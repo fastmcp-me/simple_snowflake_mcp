@@ -11,13 +11,15 @@ The server provides a single prompt:
 
 ### Tools
 
-The server implements two tools:
-- add-note: Adds a new note to the server
-  - Takes "name" and "content" as required string arguments
-  - Updates server state and notifies clients of resource changes
-- execute-snowflake-sql: Executes a SQL query on Snowflake and returns the result
-  - Takes "sql" as a required string argument
-  - Returns query result as a list of dictionaries (one per row)
+The server exposes the following MCP tools to interact with Snowflake:
+
+- **execute-snowflake-sql**: Executes a SQL query on Snowflake and returns the result (list of dictionaries)
+- **list-snowflake-warehouses**: Lists available Data Warehouses (DWH) on Snowflake
+- **list-databases**: Lists all accessible Snowflake databases
+- **list-views**: Lists all views in a database and schema
+- **describe-view**: Gives details of a view (columns, SQL)
+- **query-view**: Queries a view with an optional row limit (markdown result)
+- **execute-query**: Executes a SQL query in read-only mode (SELECT, SHOW, DESCRIBE, EXPLAIN, WITH) or not (if `read_only` is false), result in markdown format
 
 ## Configuration
 
@@ -176,12 +178,12 @@ The result will be returned in the MCP response.
 
 The server exposes the following MCP tools to interact with Snowflake:
 
-- **list-snowflake-warehouses**: Lists available Data Warehouses (DWH)
-- **list-databases**: Lists all accessible databases
+- **execute-snowflake-sql**: Executes a SQL query on Snowflake and returns the result (list of dictionaries)
+- **list-snowflake-warehouses**: Lists available Data Warehouses (DWH) on Snowflake
+- **list-databases**: Lists all accessible Snowflake databases
 - **list-views**: Lists all views in a database and schema
 - **describe-view**: Gives details of a view (columns, SQL)
 - **query-view**: Queries a view with an optional row limit (markdown result)
 - **execute-query**: Executes a SQL query in read-only mode (SELECT, SHOW, DESCRIBE, EXPLAIN, WITH) or not (if `read_only` is false), result in markdown format
-- **execute-snowflake-sql**: Executes a simple SQL query on Snowflake (returns a list of dictionaries)
 
 For each tool, see the Usage section or the MCP documentation for the call format.
