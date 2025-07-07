@@ -22,11 +22,22 @@ SNOWFLAKE_CONFIG = {
     "user": os.getenv("SNOWFLAKE_USER"),
     "password": os.getenv("SNOWFLAKE_PASSWORD"),
     "account": os.getenv("SNOWFLAKE_ACCOUNT"),
-    # Optionnel : "warehouse", "database", "schema"
 }
 
-# Ajout d'une variable globale pour le mode read-only par défaut
-MCP_READ_ONLY = os.getenv("MCP_READ_ONLY", "true").lower() == "true"
+# Ajout dynamique des paramètres optionnels si présents
+def _add_optional_snowflake_params(config):
+    for opt in [
+        ("warehouse", "SNOWFLAKE_WAREHOUSE"),
+        ("database", "SNOWFLAKE_DATABASE"),
+        ("schema", "SNOWFLAKE_SCHEMA")
+    ]:
+        val = os.getenv(opt[1])
+        if val:
+            config[opt[0]] = val
+_add_optional_snowflake_params(SNOWFLAKE_CONFIG)
+
+# Ajout d'une variable globale pour le mode read-only par défaut (TRUE par défaut)
+MCP_READ_ONLY = os.getenv("MCP_READ_ONLY", "TRUE").lower() == "true"
 
 @server.list_resources()
 async def handle_list_resources() -> list[types.Resource]:
