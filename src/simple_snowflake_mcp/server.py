@@ -130,28 +130,28 @@ async def handle_list_tools() -> list[types.Tool]:
     return [
         types.Tool(
             name="execute-snowflake-sql",
-            description="Exécute une requête SQL sur Snowflake et retourne le résultat.",
+            description="Execute a SQL query on Snowflake and return the result.",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "sql": {"type": "string", "description": "Requête SQL à exécuter"}
+                    "sql": {"type": "string", "description": "SQL query to execute"}
                 },
                 "required": ["sql"],
             },
         ),
         types.Tool(
             name="list-snowflake-warehouses",
-            description="Liste les Data Warehouses (DWH) disponibles sur Snowflake.",
+            description="List available Data Warehouses (DWH) on Snowflake.",
             inputSchema={"type": "object", "properties": {}},
         ),
         types.Tool(
             name="list-databases",
-            description="Liste toutes les bases de données Snowflake accessibles.",
+            description="List all accessible Snowflake databases.",
             inputSchema={"type": "object", "properties": {}},
         ),
         types.Tool(
             name="list-views",
-            description="Liste toutes les vues d'une base et d'un schéma.",
+            description="List all views in a database and schema.",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -163,7 +163,7 @@ async def handle_list_tools() -> list[types.Tool]:
         ),
         types.Tool(
             name="describe-view",
-            description="Donne les détails d'une vue (colonnes, SQL).",
+            description="Get details of a view (columns, SQL).",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -176,7 +176,7 @@ async def handle_list_tools() -> list[types.Tool]:
         ),
         types.Tool(
             name="query-view",
-            description="Interroge une vue avec une limite de lignes optionnelle.",
+            description="Query a view with an optional row limit (markdown result).",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -190,12 +190,12 @@ async def handle_list_tools() -> list[types.Tool]:
         ),
         types.Tool(
             name="execute-query",
-            description="Exécute une requête SQL en lecture seule (SELECT, SHOW, DESCRIBE, EXPLAIN, WITH) et retourne le résultat au format markdown.",
+            description="Execute a SQL query in read-only mode (SELECT, SHOW, DESCRIBE, EXPLAIN, WITH) or not (if 'read_only' is false), result in markdown format.",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "sql": {"type": "string", "description": "Requête SQL à exécuter"},
-                    "read_only": {"type": "boolean", "default": True, "description": "N'autoriser que les requêtes en lecture seule"}
+                    "sql": {"type": "string", "description": "SQL query to execute"},
+                    "read_only": {"type": "boolean", "default": True, "description": "Allow only read-only queries"}
                 },
                 "required": ["sql"]
             },
@@ -213,7 +213,7 @@ async def handle_call_tool(
     # Suppression du traitement de l'outil add-note
     if name == "execute-snowflake-sql":
         if not arguments or "sql" not in arguments:
-            raise ValueError("Argument 'sql' manquant")
+            raise ValueError("Missing argument 'sql'")
         sql = arguments["sql"]
         try:
             ctx = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
@@ -226,7 +226,7 @@ async def handle_call_tool(
             ctx.close()
             return [types.TextContent(type="text", text=str(result))]
         except Exception as e:
-            return [types.TextContent(type="text", text=f"Erreur Snowflake: {e}")]
+            return [types.TextContent(type="text", text=f"Snowflake error: {e}")]
 
     if name == "list-snowflake-warehouses":
         try:
@@ -240,7 +240,7 @@ async def handle_call_tool(
             ctx.close()
             return [types.TextContent(type="text", text=str(result))]
         except Exception as e:
-            return [types.TextContent(type="text", text=f"Erreur Snowflake: {e}")]
+            return [types.TextContent(type="text", text=f"Snowflake error: {e}")]
 
     if name == "list-databases":
         try:
@@ -254,7 +254,7 @@ async def handle_call_tool(
             ctx.close()
             return [types.TextContent(type="text", text=str(result))]
         except Exception as e:
-            return [types.TextContent(type="text", text=f"Erreur Snowflake: {e}")]
+            return [types.TextContent(type="text", text=f"Snowflake error: {e}")]
 
     if name == "list-views":
         try:
@@ -270,7 +270,7 @@ async def handle_call_tool(
             ctx.close()
             return [types.TextContent(type="text", text=str(result))]
         except Exception as e:
-            return [types.TextContent(type="text", text=f"Erreur Snowflake: {e}")]
+            return [types.TextContent(type="text", text=f"Snowflake error: {e}")]
 
     if name == "describe-view":
         try:
@@ -289,7 +289,7 @@ async def handle_call_tool(
             ctx.close()
             return [types.TextContent(type="text", text=f"DESC:\n{desc_columns}\n{desc_rows}\nSHOW:\n{show_columns}\n{show_rows}")]
         except Exception as e:
-            return [types.TextContent(type="text", text=f"Erreur Snowflake: {e}")]
+            return [types.TextContent(type="text", text=f"Snowflake error: {e}")]
 
     if name == "query-view":
         try:
@@ -310,7 +310,7 @@ async def handle_call_tool(
             ctx.close()
             return [types.TextContent(type="text", text=md)]
         except Exception as e:
-            return [types.TextContent(type="text", text=f"Erreur Snowflake: {e}")]
+            return [types.TextContent(type="text", text=f"Snowflake error: {e}")]
 
     if name == "execute-query":
         try:
@@ -319,7 +319,7 @@ async def handle_call_tool(
             read_only = arguments.get("read_only", MCP_READ_ONLY)
             allowed = sql.strip().split()[0].upper() in ["SELECT", "SHOW", "DESCRIBE", "EXPLAIN", "WITH"]
             if read_only and not allowed:
-                return [types.TextContent(type="text", text="Seules les requêtes en lecture seule sont autorisées.")]
+                return [types.TextContent(type="text", text="Only read-only queries are allowed.")]
             ctx = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
             cur = ctx.cursor()
             cur.execute(sql)
@@ -333,7 +333,7 @@ async def handle_call_tool(
             ctx.close()
             return [types.TextContent(type="text", text=md)]
         except Exception as e:
-            return [types.TextContent(type="text", text=f"Erreur Snowflake: {e}")]
+            return [types.TextContent(type="text", text=f"Snowflake error: {e}")]
 
     raise ValueError(f"Unknown tool: {name}")
 
@@ -345,9 +345,9 @@ async def test_snowflake_connection():
         result = cur.fetchone()
         cur.close()
         ctx.close()
-        print(f"Connexion Snowflake OK, CURRENT_TIMESTAMP: {result[0]}")
+        print(f"Snowflake connection OK, CURRENT_TIMESTAMP: {result[0]}")
     except Exception as e:
-        print(f"Erreur de connexion Snowflake: {e}")
+        print(f"Snowflake connection error: {e}")
 
 async def main():
     # Run the server using stdin/stdout streams
