@@ -1,0 +1,14 @@
+[project]
+name = "simple-snowflake-mcp"
+version = "0.1.0"
+description = "Simple Snowflake MCP Server to work behind a corporate proxy"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [ "mcp>=1.10.1",]
+
+[build-system]
+requires = [ "hatchling",]
+build-backend = "hatchling.build"
+
+[project.scripts]
+simple-snowflake-mcp = "simple_snowflake_mcp:main"

@@ -1,0 +1,6 @@
+# .github repository migration
+
+- All references to local OneDrive paths have been replaced with relative paths (".") suitable for use in a GitHub repository.
+- This affects both the French and English README files, including configuration and Inspector launch instructions.
+
+Ready for commit and push to your personal GitHub repository.
