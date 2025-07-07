@@ -1,6 +1,6 @@
-# simple_snowflake_mcp MCP server
+# Simple Snowflake MCP server
 
-Simple Snowflake MCP Server to work behind a corporate proxy
+Simple Snowflake MCP Server to work behind a corporate proxy (because I could not get that in a few minutes with existing servers, but my own server, yup). Still don't know if it's good or not. But it's good enough for now.
 
 ### Tools
 
