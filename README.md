@@ -2,13 +2,6 @@
 
 Simple Snowflake MCP Server to work behind a corporate proxy
 
-### Prompts
-
-The server provides a single prompt:
-- summarize-notes: Creates summaries of all stored notes
-  - Optional "style" argument to control detail level (brief/detailed)
-  - Generates prompt combining all current notes with style preference
-
 ### Tools
 
 The server exposes the following MCP tools to interact with Snowflake:
@@ -20,10 +13,6 @@ The server exposes the following MCP tools to interact with Snowflake:
 - **describe-view**: Gives details of a view (columns, SQL)
 - **query-view**: Queries a view with an optional row limit (markdown result)
 - **execute-query**: Executes a SQL query in read-only mode (SELECT, SHOW, DESCRIBE, EXPLAIN, WITH) or not (if `read_only` is false), result in markdown format
-
-## Configuration
-
-[TODO: Add configuration details specific to your implementation]
 
 ## Quickstart
 
