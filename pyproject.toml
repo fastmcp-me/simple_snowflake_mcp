@@ -3,8 +3,23 @@ name = "simple-snowflake-mcp"
 version = "0.1.0"
 description = "Simple Snowflake MCP Server to work behind a corporate proxy"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [ "mcp>=1.10.1",]
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.10.1",
+    "snowflake-connector-python",
+    "python-dotenv",
+    "pydantic"
+]
+authors = [
+    { name = "Yann Barraud", email = "yann@barraud.io" }
+]
+license = { file = "LICENSE" }
+keywords = ["snowflake", "mcp", "server", "proxy"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
 
 [build-system]
 requires = [ "hatchling",]
