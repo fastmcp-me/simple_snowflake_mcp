@@ -58,6 +58,112 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
   ```
 </details>
 
+## Docker Setup
+
+### Prerequisites
+
+- Docker and Docker Compose installed on your system
+- Your Snowflake credentials
+
+### Quick Start with Docker
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo>
+   cd simple_snowflake_mcp
+   ```
+
+2. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your Snowflake credentials
+   ```
+
+3. **Build and run with Docker Compose**
+   ```bash
+   # Build the Docker image
+   docker-compose build
+   
+   # Start the service
+   docker-compose up -d
+   
+   # View logs
+   docker-compose logs -f
+   ```
+
+### Docker Commands
+
+Using Docker Compose directly:
+```bash
+# Build the image
+docker-compose build
+
+# Start in production mode
+docker-compose up -d
+
+# Start in development mode (with volume mounts for live code changes)
+docker-compose --profile dev up simple-snowflake-mcp-dev -d
+
+# View logs
+docker-compose logs -f
+
+# Stop the service
+docker-compose down
+
+# Clean up (remove containers, images, and volumes)
+docker-compose down --rmi all --volumes --remove-orphans
+```
+
+Using the provided Makefile (Windows users can use `make` with WSL or install make for Windows):
+```bash
+# See all available commands
+make help
+
+# Build and start
+make build
+make up
+
+# Development mode
+make dev-up
+
+# View logs
+make logs
+
+# Clean up
+make clean
+```
+
+### Docker Configuration
+
+The Docker setup includes:
+
+- **Dockerfile**: Multi-stage build with Python 3.11 slim base image
+- **docker-compose.yml**: Service definition with environment variable support
+- **.dockerignore**: Optimized build context
+- **Makefile**: Convenient commands for Docker operations
+
+#### Environment Variables
+
+All Snowflake configuration can be set via environment variables:
+
+- `SNOWFLAKE_USER`: Your Snowflake username (required)
+- `SNOWFLAKE_PASSWORD`: Your Snowflake password (required)
+- `SNOWFLAKE_ACCOUNT`: Your Snowflake account identifier (required)
+- `SNOWFLAKE_WAREHOUSE`: Warehouse name (optional)
+- `SNOWFLAKE_DATABASE`: Default database (optional)
+- `SNOWFLAKE_SCHEMA`: Default schema (optional)
+- `MCP_READ_ONLY`: Set to "TRUE" for read-only mode (default: TRUE)
+
+#### Development Mode
+
+For development, use the development profile which mounts your source code:
+
+```bash
+docker-compose --profile dev up simple-snowflake-mcp-dev -d
+```
+
+This allows you to make changes to the code without rebuilding the Docker image.
+
 ## Development
 
 ### Building and Publishing
@@ -133,10 +239,10 @@ The result will be returned in the MCP response.
      SNOWFLAKE_USER=...
      SNOWFLAKE_PASSWORD=...
      SNOWFLAKE_ACCOUNT=...
-     # Optional: SNOWFLAKE_WAREHOUSE  # Optional: Snowflake warehouse name
-     # Optional: SNOWFLAKE_DATABASE   # Optional: default database name
-     # Optional: SNOWFLAKE_SCHEMA     # Optional: default schema name
-     # Optional: MCP_READ_ONLY=true|false  # Optional: true/false to force read-only mode
+     # SNOWFLAKE_WAREHOUSE   Optional: Snowflake warehouse name
+     # SNOWFLAKE_DATABASE    Optional: default database name
+     # SNOWFLAKE_SCHEMA      Optional: default schema name
+     # MCP_READ_ONLY=true|false   Optional: true/false to force read-only mode
      ```
 
 3. **Configure VS Code for MCP debugging**
