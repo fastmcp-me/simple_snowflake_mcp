@@ -1,4 +1,5 @@
 # Simple Snowflake MCP server
+[![Trust Score](https://archestra.ai/mcp-catalog/api/badge/quality/YannBrrd/simple_snowflake_mcp)](https://archestra.ai/mcp-catalog/yannbrrd__simple_snowflake_mcp)
 
 Simple Snowflake MCP Server to work behind a corporate proxy (because I could not get that in a few minutes with existing servers, but my own server, yup). Still don't know if it's good or not. But it's good enough for now.
 
