@@ -1,3 +1,10 @@
+[![Add to Cursor](https://fastmcp.me/badges/cursor_dark.svg)](https://fastmcp.me/MCP/Details/1205/simple-snowflake)
+[![Add to VS Code](https://fastmcp.me/badges/vscode_dark.svg)](https://fastmcp.me/MCP/Details/1205/simple-snowflake)
+[![Add to Claude](https://fastmcp.me/badges/claude_dark.svg)](https://fastmcp.me/MCP/Details/1205/simple-snowflake)
+[![Add to ChatGPT](https://fastmcp.me/badges/chatgpt_dark.svg)](https://fastmcp.me/MCP/Details/1205/simple-snowflake)
+[![Add to Codex](https://fastmcp.me/badges/codex_dark.svg)](https://fastmcp.me/MCP/Details/1205/simple-snowflake)
+[![Add to Gemini](https://fastmcp.me/badges/gemini_dark.svg)](https://fastmcp.me/MCP/Details/1205/simple-snowflake)
+
 # Simple Snowflake MCP server
 [![Trust Score](https://archestra.ai/mcp-catalog/api/badge/quality/YannBrrd/simple_snowflake_mcp)](https://archestra.ai/mcp-catalog/yannbrrd__simple_snowflake_mcp)
 
